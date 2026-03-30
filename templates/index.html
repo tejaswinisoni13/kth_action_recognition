@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Action Recognition</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+        }
+
+        .container {
+            width: 420px;
+            margin: 80px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .upload-box {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        button {
+            padding: 10px 25px;
+            background: linear-gradient(45deg, #007bff, #00c6ff);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .confidence {
+            color: #555;
+            font-size: 16px;
+        }
+
+        video {
+            margin-top: 20px;
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        #loader {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-size: 12px;
+            color: gray;
+        }
+    </style>
+
+    <script>
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🎥 Action Recognition</h2>
+
+    <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+
+        <div class="upload-box">
+            <input type="file" name="video" required>
+        </div>
+
+        <br>
+        <button type="submit">Predict</button>
+    </form>
+
+    <!-- Loader -->
+    <div id="loader">
+        ⏳ Processing... Please wait
+    </div>
+
+    {% if prediction %}
+        <div class="result">
+            Prediction: {{ prediction }}
+        </div>
+
+        <div class="confidence">
+            Confidence: {{ confidence }}%
+        </div>
+    {% endif %}
+
+    {% if video_path %}
+        <video controls>
+            <source src="{{ video_path }}" type="video/mp4">
+        </video>
+    {% endif %}
+
+    <div class="footer">
+        Built using Flask + Deep Learning
+    </div>
+
+</div>
+
+</body>
+</html>
